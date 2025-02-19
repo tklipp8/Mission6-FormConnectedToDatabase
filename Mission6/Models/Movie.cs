@@ -15,6 +15,7 @@ namespace Mission6.Models
         [Required]
         public string Title { get; set; }
         [Required]
+        [Range(1888,2100)]
         public string Year { get; set; }
         public string? Director { get; set; }
         public string? Rating { get; set; }
