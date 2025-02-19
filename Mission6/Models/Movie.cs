@@ -6,6 +6,7 @@ namespace Mission6.Models
     public class Movie
     {
         //Properties of the form with get and set included for each
+        //Set each of the fields required or not required as needed
         [Key]
         [Required]
         public int MovieId { get; set; }
@@ -14,6 +15,8 @@ namespace Mission6.Models
         public Category Category { get; set; }
         [Required]
         public string Title { get; set; }
+
+        //Set a range on the year, so that we can't get any movies too long ago or too in the future.
         [Required]
         [Range(1888,2100)]
         public string Year { get; set; }

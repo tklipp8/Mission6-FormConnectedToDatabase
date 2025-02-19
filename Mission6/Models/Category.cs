@@ -2,6 +2,7 @@
 
 namespace Mission6.Models
 {
+    //This is the category class that we use to get the category to come in
     public class Category
     {
         [Key]

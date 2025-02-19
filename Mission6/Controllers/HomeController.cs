@@ -56,13 +56,14 @@ namespace Mission6.Controllers
 
         public IActionResult MovieList()
         {
-            //Linq query to get all applications that are not creeper stalkers
+            //Linq query to get all movies
             var applications = _context.Movies
                 .OrderBy(x => x.MovieId).ToList();
 
             return View(applications);
         }
 
+        //This gets the Movie record and puts it in an application so that we can edit it.
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -75,6 +76,7 @@ namespace Mission6.Controllers
             return View("MovieForm", recordToEdit);
         }
 
+        //This is the post that will post the changes to the movie record.
         [HttpPost]
         public IActionResult Edit(Movie updatedInfo)
         {
@@ -82,6 +84,8 @@ namespace Mission6.Controllers
             _context.SaveChanges();
             return RedirectToAction("MovieList");
         }
+
+        //This is a delete action. This pulls up the specific record and also the view to confirm the deletion
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -91,6 +95,7 @@ namespace Mission6.Controllers
             return View(recordToDelete);
         }
 
+        //This actually deletes the movie record when we hit confirm
         [HttpPost]
         public IActionResult Delete(Movie application)
         {

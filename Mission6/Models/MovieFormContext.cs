@@ -14,6 +14,7 @@ namespace Mission6.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) //Seed data
         {
+            //Bring in all of the different category names for the form to select from
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId = 1, CategoryName = "Miscellaneous" },
                 new Category { CategoryId = 2, CategoryName = "Drama" },

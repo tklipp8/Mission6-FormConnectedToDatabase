@@ -3,7 +3,7 @@
 *@
 @{
 }
-
+@*This is the new Movie List view. We can see all of the movies that have been submitted.*@
 @model List<Movie>
 
 <table class="table table-bordered">
@@ -22,7 +22,7 @@
 			<th>Notes</th>
 		</tr>
 	</thead>
-
+	@*Loop through to get each record correctly.*@
 	@foreach (var x in Model)
 	{
 		<tbody>
@@ -38,6 +38,7 @@
 				<td>@x.CopiedToPlex</td>
 				<td>@x.Notes</td>
 
+				@*Include an Edit button and a Delete button to edit or delete each respective record.*@
 				<td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.MovieId">Edit</a></td>
 				<td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.MovieId">Delete</a></td>
 			</tr>
