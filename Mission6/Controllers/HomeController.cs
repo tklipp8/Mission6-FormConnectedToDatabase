@@ -30,18 +30,73 @@ namespace Mission6.Controllers
         [HttpGet]
         public IActionResult MovieForm()
         {
+            ViewBag.Categories = _context.Categories
+               .OrderBy(x => x.CategoryName)
+               .ToList(); //Get all majors
             return View();
         }
 
         //Post to put everything from the form to the database
         [HttpPost]
-        public IActionResult MovieForm(Form response)
+        public IActionResult MovieForm(Movie response)
         {
-            _context.Forms.Add(response); //Add record to the database
-            _context.SaveChanges(); //Save changes
+            if (response.MovieId > 0)
+            {
+                // This is an edit operation
+                _context.Update(response);
+            }
+            else
+            {
+                // This is a new application
+                _context.Movies.Add(response);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
 
-            //Gives us the confirmation page and passes the response
-            return View("Confirmation", response);
+        public IActionResult MovieList()
+        {
+            //Linq query to get all applications that are not creeper stalkers
+            var applications = _context.Movies
+                .OrderBy(x => x.MovieId).ToList();
+
+            return View(applications);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList(); //Get all majors
+            return View("MovieForm", recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            return View(recordToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movie application)
+        {
+            _context.Movies.Remove(application);
+            _context.SaveChanges();
+            return RedirectToAction("MovieList");
         }
     }
 }
